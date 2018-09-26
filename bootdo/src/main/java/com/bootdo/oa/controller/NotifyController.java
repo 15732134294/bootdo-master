@@ -68,15 +68,15 @@ public class NotifyController extends BaseController {
 	@GetMapping("/edit/{id}")
 	@RequiresPermissions("oa:notify:edit")
 	String edit(@PathVariable("id") Long id, Model model) {
-		NotifyDO notify = notifyService.get(id);
-		List<DictDO> dictDOS = dictService.listByType("oa_notify_type");
-		String type = notify.getType();
-		for (DictDO dictDO:dictDOS){
-			if(type.equals(dictDO.getValue())){
-				dictDO.setRemarks("checked");
-			}
-		}
-		model.addAttribute("oaNotifyTypes",dictDOS);
+		NotifyDO notify = notifyService.get2(id);
+//		List<DictDO> dictDOS = dictService.listByType("oa_notify_type");
+//		String type = notify.getType();
+//		for (DictDO dictDO:dictDOS){
+//			if(type.equals(dictDO.getValue())){
+//				dictDO.setRemarks("checked");
+//			}
+//		}
+	//	model.addAttribute("oaNotifyTypes",dictDOS);
 		model.addAttribute("notify", notify);
 		return "oa/notify/edit";
 	}

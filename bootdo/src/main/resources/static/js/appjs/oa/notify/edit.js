@@ -1,5 +1,5 @@
 $().ready(function() {
-	//loadType();
+	loadType();
 	validateRule();
 });
 
@@ -51,6 +51,7 @@ function validateRule() {
 
 function loadType(){
 	var html = "";
+    debugger;
 	$.ajax({
 		url : '/common/dict/list/oa_notify_type',
 		success : function(data) {
@@ -64,10 +65,16 @@ function loadType(){
 			});
 			$(".chosen-select").val($("#Ttype").val());
 			$(".chosen-select").trigger("chosen:updated");
-			// 点击事件
-			$('.chosen-select').on('change', function(e, params) {
-				
-			});
+            //点击事件
+            $('.chosen-select').on('change', function(e, params) {
+                console.log(params.selected);
+                var opt = {
+                    query : {
+                        type : params.selected,
+                    }
+                }
+                $('#exampleTable').bootstrapTable('refresh', opt);
+            });
 		}
 	});
 }

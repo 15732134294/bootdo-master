@@ -77,22 +77,24 @@ public class NotifyServiceImpl implements NotifyService {
             record.setIsRead(0);
             records.add(record);
         }
-        recordDao.batchSave(records);
-        //给在线用户发送通知
-        ThreadPoolExecutor executor = new ThreadPoolExecutor(1,1,0, TimeUnit.MILLISECONDS,new LinkedBlockingDeque<>());
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                for (UserDO userDO : sessionService.listOnlineUser()) {
-                    for (Long userId : userIds) {
-                        if (userId.equals(userDO.getUserId())) {
-                            template.convertAndSendToUser(userDO.toString(), "/queue/notifications", "新消息：" + notify.getTitle());
+        if(records.size()>0){
+            recordDao.batchSave(records);
+            //给在线用户发送通知
+            ThreadPoolExecutor executor = new ThreadPoolExecutor(1,1,0, TimeUnit.MILLISECONDS,new LinkedBlockingDeque<>());
+            executor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    for (UserDO userDO : sessionService.listOnlineUser()) {
+                        for (Long userId : userIds) {
+                            if (userId.equals(userDO.getUserId())) {
+                                template.convertAndSendToUser(userDO.toString(), "/queue/notifications", "新消息：" + notify.getTitle());
+                            }
                         }
                     }
                 }
-            }
-        });
-        executor.shutdown();
+            });
+             executor.shutdown();
+        }
         return r;
     }
 
@@ -126,5 +128,9 @@ public class NotifyServiceImpl implements NotifyService {
         PageUtils page = new PageUtils(rows, notifyDao.countDTO(map));
         return page;
     }
-
+    @Override
+    public NotifyDO get2(Long id) {
+        NotifyDO rDO = notifyDao.get(id);
+        return rDO;
+    }
 }

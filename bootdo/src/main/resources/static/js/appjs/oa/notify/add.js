@@ -4,6 +4,7 @@ $().ready(function() {
 });
 
 $.validator.setDefaults({
+    ignore: ":hidden:not(select)",
 	submitHandler : function() {
 		save();
 	}
@@ -36,6 +37,7 @@ function save() {
 function validateRule() {
 	var icon = "<i class='fa fa-times-circle'></i> ";
 	$("#signupForm").validate({
+        ignore: ":hidden:not(select)",
 		rules : {
 			name : {
 				required : true
@@ -63,6 +65,7 @@ function loadType(){
 			});
 			//点击事件
 			$('.chosen-select').on('change', function(e, params) {
+				debugger;
 				console.log(params.selected);
 				var opt = {
 					query : {
