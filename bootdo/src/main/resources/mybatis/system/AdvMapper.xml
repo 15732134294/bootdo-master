@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.system.dao.AdvDao">
+
+	<select id="get" resultType="com.bootdo.system.domain.AdvDO">
+		select `adv_id`,`ap_id`,`adv_title`,`adv_url`,`start_date`,`end_date`,`sort`,`click_num`,`res_url` from zk_adv where adv_id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.system.domain.AdvDO">
+		select `adv_id`,`ap_id`,`adv_title`,`adv_url`,`start_date`,`end_date`,`sort`,`click_num`,`res_url` from zk_adv
+        <where>  
+		  		  <if test="advId != null and advId != ''"> and adv_id = #{advId} </if>
+		  		  <if test="apId != null and apId != ''"> and ap_id = #{apId} </if>
+		  		  <if test="advTitle != null and advTitle != ''"> and adv_title = #{advTitle} </if>
+		  		  <if test="advUrl != null and advUrl != ''"> and adv_url = #{advUrl} </if>
+		  		  <if test="startDate != null and startDate != ''"> and start_date = #{startDate} </if>
+		  		  <if test="endDate != null and endDate != ''"> and end_date = #{endDate} </if>
+		  		  <if test="sort != null and sort != ''"> and sort = #{sort} </if>
+		  		  <if test="clickNum != null and clickNum != ''"> and click_num = #{clickNum} </if>
+		  		  <if test="resUrl != null and resUrl != ''"> and res_url = #{resUrl} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by adv_id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from zk_adv
+		 <where>  
+		  		  <if test="advId != null and advId != ''"> and adv_id = #{advId} </if>
+		  		  <if test="apId != null and apId != ''"> and ap_id = #{apId} </if>
+		  		  <if test="advTitle != null and advTitle != ''"> and adv_title = #{advTitle} </if>
+		  		  <if test="advUrl != null and advUrl != ''"> and adv_url = #{advUrl} </if>
+		  		  <if test="startDate != null and startDate != ''"> and start_date = #{startDate} </if>
+		  		  <if test="endDate != null and endDate != ''"> and end_date = #{endDate} </if>
+		  		  <if test="sort != null and sort != ''"> and sort = #{sort} </if>
+		  		  <if test="clickNum != null and clickNum != ''"> and click_num = #{clickNum} </if>
+		  		  <if test="resUrl != null and resUrl != ''"> and res_url = #{resUrl} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.system.domain.AdvDO">
+		insert into zk_adv
+		(
+			`adv_id`, 
+			`ap_id`, 
+			`adv_title`, 
+			`adv_url`, 
+			`start_date`, 
+			`end_date`, 
+			`sort`, 
+			`click_num`, 
+			`res_url`
+		)
+		values
+		(
+			#{advId}, 
+			#{apId}, 
+			#{advTitle}, 
+			#{advUrl}, 
+			#{startDate}, 
+			#{endDate}, 
+			#{sort}, 
+			#{clickNum}, 
+			#{resUrl}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.system.domain.AdvDO">
+		update zk_adv 
+		<set>
+			<if test="apId != null">`ap_id` = #{apId}, </if>
+			<if test="advTitle != null">`adv_title` = #{advTitle}, </if>
+			<if test="advUrl != null">`adv_url` = #{advUrl}, </if>
+			<if test="startDate != null">`start_date` = #{startDate}, </if>
+			<if test="endDate != null">`end_date` = #{endDate}, </if>
+			<if test="sort != null">`sort` = #{sort}, </if>
+			<if test="clickNum != null">`click_num` = #{clickNum}, </if>
+			<if test="resUrl != null">`res_url` = #{resUrl}</if>
+		</set>
+		where adv_id = #{advId}
+	</update>
+	
+	<delete id="remove">
+		delete from zk_adv where adv_id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from zk_adv where adv_id in 
+		<foreach item="advId" collection="array" open="(" separator="," close=")">
+			#{advId}
+		</foreach>
+	</delete>
+
+</mapper>

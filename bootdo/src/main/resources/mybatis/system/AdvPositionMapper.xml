@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.system.dao.AdvPositionDao">
+
+	<select id="get" resultType="com.bootdo.system.domain.AdvPositionDO">
+		select `ap_id`,`ap_name`,`ap_intro`,`ap_class`,`ap_display`,`is_use`,`ap_width`,`ap_height`,`ap_key`,`ap_sort` from zk_adv_position where ap_id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.system.domain.AdvPositionDO">
+		select `ap_id`,`ap_name`,`ap_intro`,`ap_class`,`ap_display`,`is_use`,`ap_width`,`ap_height`,`ap_key`,`ap_sort` from zk_adv_position
+        <where>  
+		  		  <if test="apId != null and apId != ''"> and ap_id = #{apId} </if>
+		  		  <if test="apName != null and apName != ''"> and ap_name = #{apName} </if>
+		  		  <if test="apIntro != null and apIntro != ''"> and ap_intro = #{apIntro} </if>
+		  		  <if test="apClass != null and apClass != ''"> and ap_class = #{apClass} </if>
+		  		  <if test="apDisplay != null and apDisplay != ''"> and ap_display = #{apDisplay} </if>
+		  		  <if test="isUse != null and isUse != ''"> and is_use = #{isUse} </if>
+		  		  <if test="apWidth != null and apWidth != ''"> and ap_width = #{apWidth} </if>
+		  		  <if test="apHeight != null and apHeight != ''"> and ap_height = #{apHeight} </if>
+		  		  <if test="apKey != null and apKey != ''"> and ap_key = #{apKey} </if>
+		  		  <if test="apSort != null and apSort != ''"> and ap_sort = #{apSort} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by ap_id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from zk_adv_position
+		 <where>  
+		  		  <if test="apId != null and apId != ''"> and ap_id = #{apId} </if>
+		  		  <if test="apName != null and apName != ''"> and ap_name = #{apName} </if>
+		  		  <if test="apIntro != null and apIntro != ''"> and ap_intro = #{apIntro} </if>
+		  		  <if test="apClass != null and apClass != ''"> and ap_class = #{apClass} </if>
+		  		  <if test="apDisplay != null and apDisplay != ''"> and ap_display = #{apDisplay} </if>
+		  		  <if test="isUse != null and isUse != ''"> and is_use = #{isUse} </if>
+		  		  <if test="apWidth != null and apWidth != ''"> and ap_width = #{apWidth} </if>
+		  		  <if test="apHeight != null and apHeight != ''"> and ap_height = #{apHeight} </if>
+		  		  <if test="apKey != null and apKey != ''"> and ap_key = #{apKey} </if>
+		  		  <if test="apSort != null and apSort != ''"> and ap_sort = #{apSort} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.system.domain.AdvPositionDO">
+		insert into zk_adv_position
+		(
+			`ap_id`, 
+			`ap_name`, 
+			`ap_intro`, 
+			`ap_class`, 
+			`ap_display`, 
+			`is_use`, 
+			`ap_width`, 
+			`ap_height`, 
+			`ap_key`, 
+			`ap_sort`
+		)
+		values
+		(
+			#{apId}, 
+			#{apName}, 
+			#{apIntro}, 
+			#{apClass}, 
+			#{apDisplay}, 
+			#{isUse}, 
+			#{apWidth}, 
+			#{apHeight}, 
+			#{apKey}, 
+			#{apSort}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.system.domain.AdvPositionDO">
+		update zk_adv_position 
+		<set>
+			<if test="apName != null">`ap_name` = #{apName}, </if>
+			<if test="apIntro != null">`ap_intro` = #{apIntro}, </if>
+			<if test="apClass != null">`ap_class` = #{apClass}, </if>
+			<if test="apDisplay != null">`ap_display` = #{apDisplay}, </if>
+			<if test="isUse != null">`is_use` = #{isUse}, </if>
+			<if test="apWidth != null">`ap_width` = #{apWidth}, </if>
+			<if test="apHeight != null">`ap_height` = #{apHeight}, </if>
+			<if test="apKey != null">`ap_key` = #{apKey}, </if>
+			<if test="apSort != null">`ap_sort` = #{apSort}</if>
+		</set>
+		where ap_id = #{apId}
+	</update>
+	
+	<delete id="remove">
+		delete from zk_adv_position where ap_id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from zk_adv_position where ap_id in 
+		<foreach item="apId" collection="array" open="(" separator="," close=")">
+			#{apId}
+		</foreach>
+	</delete>
+
+</mapper>

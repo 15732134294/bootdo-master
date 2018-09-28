@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+						<input id="adv_id" name="adv_id" th:value="${adv.adv_id}"  type="hidden">
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">广告位id：</label>
+								<div class="col-sm-8">
+									<input id="apId" name="apId" th:value="${adv.apId}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">标题：</label>
+								<div class="col-sm-8">
+									<input id="advTitle" name="advTitle" th:value="${adv.advTitle}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">广告内容：</label>
+								<div class="col-sm-8">
+									<input id="advUrl" name="advUrl" th:value="${adv.advUrl}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">广告开始时间：</label>
+								<div class="col-sm-8">
+									<input id="startDate" name="startDate" th:value="${adv.startDate}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">广告结束时间：</label>
+								<div class="col-sm-8">
+									<input id="endDate" name="endDate" th:value="${adv.endDate}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">幻灯片排序：</label>
+								<div class="col-sm-8">
+									<input id="sort" name="sort" th:value="${adv.sort}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">广告点击率：</label>
+								<div class="col-sm-8">
+									<input id="clickNum" name="clickNum" th:value="${adv.clickNum}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">：</label>
+								<div class="col-sm-8">
+									<input id="resUrl" name="resUrl" th:value="${adv.resUrl}" class="form-control" type="text">
+								</div>
+							</div>
+																					<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/sys/adv/edit.js">
+	</script>
+</body>
+</html>
