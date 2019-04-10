@@ -52,6 +52,7 @@ public class ShiroConfig {
 
     @Bean
     public static LifecycleBeanPostProcessor getLifecycleBeanPostProcessor() {
+
         return new LifecycleBeanPostProcessor();
     }
 
